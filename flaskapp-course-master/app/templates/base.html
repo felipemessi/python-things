@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="{{url_for('static',
+    filename="css/bootstrap.min.css")}}">
+
+    <title>{% block title%}Toilter{% endblock %}</title>
+
+  <body>
+    <div class="container">
+      <div class="header clearfix">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Toilter</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Features</a>
+            </li>
+            <li class="nav-item">
+            {% if current_user.is_authenticated %}
+              <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+              <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+            {% endif %}
+            </li>
+            </ul>
+        </div>
+        </nav>
+      </div>
+
+      
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="alert alert-warning">
+          <ul class=flashes>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+      {% endwith %}
+      
+      {% block content %}
+      {% endblock %}
+      
+      <div class="row">
+        <footer class="footer">
+          <p>&copy; 2020 Company, Inc.</p>
+        </footer>
+      </div>
+    </div> <!-- /container -->
+
+
+    <!--Scripts-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename="js/bootstrap.min.js")}}"></script>  
+
+  </body>
+</html>
